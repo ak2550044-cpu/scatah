@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scatch | Create Product</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen bg-[#f8f7f4] text-stone-900">
+  <%- include('header') %>
+
+  <main class="mx-auto max-w-6xl px-5 py-8 sm:px-6 sm:py-12">
+    <div class="mb-8 flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
+      <div>
+        <p class="text-xs font-bold uppercase tracking-[0.24em] text-orange-600">Scatch admin</p>
+        <h1 class="mt-2 text-3xl font-black tracking-tight sm:text-4xl">Create a product</h1>
+        <p class="mt-3 text-stone-600">Add the details customers will see in the shop.</p>
+      </div>
+      <a href="/shop" class="inline-flex w-fit items-center gap-2 rounded-xl border border-stone-300 bg-white px-4 py-2.5 text-sm font-bold transition hover:border-stone-900 hover:bg-stone-900 hover:text-white">View shop <span aria-hidden="true">→</span></a>
+    </div>
+
+    <% if (typeof success !== 'undefined' && success.length) { %>
+      <div role="status" class="mb-6 flex items-center gap-3 rounded-xl border border-green-200 bg-green-50 px-4 py-3 text-sm font-medium text-green-800"><span class="flex h-6 w-6 items-center justify-center rounded-full bg-green-600 text-white">✓</span><%= success[0] %></div>
+    <% } %>
+    <% if (typeof error !== 'undefined' && error.length) { %>
+      <div role="alert" class="mb-6 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium text-red-800"><%= error[0] %></div>
+    <% } %>
+
+    <div class="grid gap-6 lg:grid-cols-[minmax(0,1fr)_18rem] lg:items-start">
+      <form action="/products/create" method="POST" enctype="multipart/form-data" class="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-stone-200 sm:p-8">
+        <div class="mb-7 flex items-center justify-between border-b border-stone-100 pb-5">
+          <div>
+            <h2 class="font-bold">Product details</h2>
+            <p class="mt-1 text-sm text-stone-500">Fields marked with * are required.</p>
+          </div>
+          <span class="rounded-full bg-orange-50 px-3 py-1 text-xs font-bold text-orange-700">New item</span>
+        </div>
+
+        <div class="grid gap-6 sm:grid-cols-2">
+          <label class="block sm:col-span-2">
+            <span class="mb-2 block text-sm font-bold">Product image <span class="text-orange-600">*</span></span>
+            <span class="flex min-h-36 items-center rounded-2xl border-2 border-dashed border-stone-300 bg-stone-50 p-4 transition hover:border-orange-400 hover:bg-orange-50/40">
+              <input type="file" name="image" accept="image/*" required class="block w-full cursor-pointer text-sm text-stone-500 file:mr-4 file:cursor-pointer file:rounded-lg file:border-0 file:bg-stone-900 file:px-4 file:py-2.5 file:text-sm file:font-bold file:text-white hover:file:bg-orange-600">
+            </span>
+            <span class="mt-2 block text-xs text-stone-500">Use a clear product image in JPG, PNG, or WEBP format.</span>
+          </label>
+
+          <label class="block sm:col-span-2">
+            <span class="mb-2 block text-sm font-bold">Product name <span class="text-orange-600">*</span></span>
+            <input type="text" name="name" placeholder="e.g. Classic Leather Backpack" required class="w-full rounded-xl border border-stone-300 px-4 py-3 outline-none transition placeholder:text-stone-400 focus:border-orange-500 focus:ring-4 focus:ring-orange-100">
+          </label>
+
+          <label class="block">
+            <span class="mb-2 block text-sm font-bold">Price (&#8377;) <span class="text-orange-600">*</span></span>
+            <input type="number" name="price" min="0" step="0.01" placeholder="1999" required class="w-full rounded-xl border border-stone-300 px-4 py-3 outline-none transition placeholder:text-stone-400 focus:border-orange-500 focus:ring-4 focus:ring-orange-100">
+          </label>
+
+          <label class="block">
+            <span class="mb-2 block text-sm font-bold">Discount (%)</span>
+            <input type="number" name="discount" min="0" max="100" value="0" class="w-full rounded-xl border border-stone-300 px-4 py-3 outline-none transition focus:border-orange-500 focus:ring-4 focus:ring-orange-100">
+          </label>
+
+          <div class="sm:col-span-2">
+            <p class="mb-3 text-sm font-bold">Card appearance</p>
+            <div class="grid gap-3 sm:grid-cols-3">
+              <label class="flex items-center justify-between rounded-xl border border-stone-200 px-3 py-2.5 transition hover:border-orange-300">
+                <span class="text-sm font-medium">Background</span>
+                <input aria-label="Background color" type="color" name="bgcolor" value="#f5f5f4" class="h-8 w-10 cursor-pointer rounded border-0 bg-transparent p-0">
+              </label>
+              <label class="flex items-center justify-between rounded-xl border border-stone-200 px-3 py-2.5 transition hover:border-orange-300">
+                <span class="text-sm font-medium">Panel</span>
+                <input aria-label="Panel color" type="color" name="panelcolor" value="#ffffff" class="h-8 w-10 cursor-pointer rounded border-0 bg-transparent p-0">
+              </label>
+              <label class="flex items-center justify-between rounded-xl border border-stone-200 px-3 py-2.5 transition hover:border-orange-300">
+                <span class="text-sm font-medium">Text</span>
+                <input aria-label="Text color" type="color" name="textcolor" value="#1c1917" class="h-8 w-10 cursor-pointer rounded border-0 bg-transparent p-0">
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <button type="submit" class="mt-8 flex w-full items-center justify-center gap-2 rounded-xl bg-stone-900 px-5 py-3.5 font-bold text-white transition hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2">Create product <span aria-hidden="true">→</span></button>
+      </form>
+
+      <aside class="rounded-3xl bg-stone-900 p-6 text-white lg:sticky lg:top-6">
+        <p class="text-xs font-bold uppercase tracking-[0.2em] text-orange-400">Publishing guide</p>
+        <h2 class="mt-3 text-xl font-bold">Make it shop-ready.</h2>
+        <ul class="mt-6 space-y-4 text-sm leading-6 text-stone-300">
+          <li class="flex gap-3"><span class="font-bold text-orange-400">01</span><span>Use a descriptive name customers can scan quickly.</span></li>
+          <li class="flex gap-3"><span class="font-bold text-orange-400">02</span><span>Keep the price accurate and set a discount only when needed.</span></li>
+          <li class="flex gap-3"><span class="font-bold text-orange-400">03</span><span>Choose colours that keep text easy to read.</span></li>
+        </ul>
+        <div class="mt-7 rounded-2xl bg-white/10 p-4 text-sm text-stone-300">Once published, the product is immediately visible in the shop.</div>
+      </aside>
+    </div>
+  </main>
+</body>
+</html>

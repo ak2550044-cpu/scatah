@@ -1,0 +1,18 @@
+<% const isLoggedIn = typeof loggedin !== 'undefined' ? loggedin : false; %>
+<header class="border-b border-stone-200 bg-white">
+  <nav class="mx-auto flex max-w-7xl items-center justify-between px-6 py-5">
+    <a href="<%= isLoggedIn ? '/shop' : '/' %>" class="text-2xl font-black tracking-tight">SCATCH<span class="text-orange-600">.</span></a>
+    <% if (isLoggedIn) { %>
+      <div class="flex items-center gap-3">
+        <a href="/shop" class="rounded-lg px-4 py-2 text-sm font-medium transition  hover:border-stone-900 hover:bg-stone-900 hover:text-white">Shop</a>
+       <a class="rounded-lg px-4 py-2 text-sm font-medium text-black transition hover:bg-stone-900 hover:text-white" href="/cart">Cart</a>
+        <a class="rounded-lg border border-stone-300 px-4 py-2 text-sm font-medium transition hover:border-stone-900 hover:bg-stone-900 hover:text-white"  href="/profile">My Account</a>
+      
+
+
+        <a href="/owners/admin" class="rounded-lg bg-stone-900 px-4 py-2 text-sm font-medium text-white transition  hover:border-stone-900 hover:bg-stone-900 hover:text-white">Create product</a>
+        <a href="/logout" class="rounded-lg border border-stone-300 px-4 py-2 text-sm font-medium transition  hover:bg-stone-900 hover:text-white">Log out</a>
+      </div>
+    <% } %>
+  </nav>
+</header>
